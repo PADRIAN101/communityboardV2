@@ -54,7 +54,8 @@ export default function CommunityForm(){
                         </div>
                     </div>
 
-                    <TextArea placeholder="About the community" resize="vertical"/>
+                    <TextArea placeholder="About the community (Share your recent experience with the target community, highlighting their specific healthcare needs, observed challenges, or your story for supporting a community.)"
+                              resize="vertical"/>
                     <div className="flex-col-2 gap-4">
                         <div>
                             Healthcare initiatives?
