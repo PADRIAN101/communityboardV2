@@ -39,6 +39,7 @@ export default async function NewComPage(){
                     <div className="border rounded-md inline-block">
                         {Object.keys(organizationsNames).map(orgId => (
                             <Link
+                                key={orgId} // Add the unique key prop
                                 href={'/new-com/' + orgId}
                                 className={
                                     "py-2 px-4 flex gap-2 items-center "

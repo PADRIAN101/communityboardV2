@@ -1,6 +1,6 @@
 import Hero from "@/app/components/Hero";
 import Jobscom from "@/app/components/Jobscom";
-import Link from 'next/link';
+
 import {
     getSignInUrl,
     getSignUpUrl,

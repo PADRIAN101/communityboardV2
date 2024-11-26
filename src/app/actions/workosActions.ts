@@ -1,6 +1,7 @@
 'use server';
 import {WorkOS} from "@workos-inc/node";
 import {revalidatePath} from "next/cache";
+import { redirect } from "next/dist/client/components/redirect";
 const workos = new WorkOS(process.env.WORKOS_API_KEY);
 
 

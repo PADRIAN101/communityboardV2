@@ -26,7 +26,7 @@ export default async function NewComPageForOrg(props:PageProps){
     }
 
     return(
-        <CommunityForm/>
+        <CommunityForm orgId ={orgId}/>
     );
 
 }
