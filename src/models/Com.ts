@@ -1,6 +1,5 @@
 import {model, models, Schema} from 'mongoose';
 
-/*
 export type Com = {
     _id: string;
     title: string;
@@ -18,7 +17,6 @@ export type Com = {
     updatedAt: string;
     isAdmin?: boolean;
 };
-*/
 
 const ComSchema = new Schema({
     title: {type: String, required: true},
@@ -32,5 +30,9 @@ const ComSchema = new Schema({
     initiatives: {type: [String], required: true },
     comPhoto: {type: String},
 
-    });
+    },{
+    timestamps:true,
+    }
+
+    );
 export const ComModel = models?.Com || model('Com', ComSchema);

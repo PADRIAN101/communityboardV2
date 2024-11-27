@@ -22,7 +22,7 @@ export default async function Home() {
   return (
       <>
           <Hero />
-          <Jobscom/>
+          <Jobscom />
       </>
 
 

@@ -26,7 +26,7 @@ export default function ComForm({orgId}:{orgId:string}) {
                     action={handleSaveCom}
                     className="container mt-6 flex flex-col gap-3.5">
                     <TextField.Root name="title" placeholder="Name of community (format: Brgy.10, town or city, province, country)"/>
-                    <div className="flex">
+                    <div className="flex sm:flex">
                         <div className="w-1/3">
                             <h3>Organization Logo</h3>
                             <ImageUpload name="orgIcon" icon={faImages} defaultValue= "https://example.com/default-image.png"/>
@@ -66,19 +66,19 @@ export default function ComForm({orgId}:{orgId:string}) {
                             Healthcare initiatives?
                             <div className="flex gap-10 bg-emerald-50 rounded-md border border-gray-150">
                                 <div className="grow">
-                                    <CheckboxGroup.Root color="green" defaultValue={["dental"]} name="initiatives">
-                                        <CheckboxGroup.Item value="dental">Dental mission</CheckboxGroup.Item>
-                                        <CheckboxGroup.Item value="medical">Medical mission</CheckboxGroup.Item>
-                                        <CheckboxGroup.Item value="volunteer">Volunteers</CheckboxGroup.Item>
-                                        <CheckboxGroup.Item value="medicine">Medicine supplies</CheckboxGroup.Item>
+                                    <CheckboxGroup.Root color="green" defaultValue={["dental mission"]} name="initiatives">
+                                        <CheckboxGroup.Item value="dental mission">Dental mission</CheckboxGroup.Item>
+                                        <CheckboxGroup.Item value="medical mission">Medical mission</CheckboxGroup.Item>
+                                        <CheckboxGroup.Item value="volunteers">Volunteers</CheckboxGroup.Item>
+                                        <CheckboxGroup.Item value="medicine supplies">Medicine supplies</CheckboxGroup.Item>
                                     </CheckboxGroup.Root>
                                 </div>
                                 <div className="grow">
-                                    <CheckboxGroup.Root color="green" defaultValue={["feeding"]} name="initiatives">
-                                        <CheckboxGroup.Item value="feeding">Feeding program</CheckboxGroup.Item>
+                                    <CheckboxGroup.Root color="green" defaultValue={["feeding program"]} name="initiatives">
+                                        <CheckboxGroup.Item value="feeding program">Feeding program</CheckboxGroup.Item>
                                         <CheckboxGroup.Item value="vaccinations">Vaccinations</CheckboxGroup.Item>
-                                        <CheckboxGroup.Item value="drives">Awareness drives</CheckboxGroup.Item>
-                                        <CheckboxGroup.Item value="training">First-aid training</CheckboxGroup.Item>
+                                        <CheckboxGroup.Item value="awareness drives">Awareness drives</CheckboxGroup.Item>
+                                        <CheckboxGroup.Item value="first-aid training">First-aid training</CheckboxGroup.Item>
                                     </CheckboxGroup.Root>
                                 </div>
                             </div>
