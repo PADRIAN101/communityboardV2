@@ -9,8 +9,7 @@ import {ChangeEvent, useRef, useState} from "react";
 
 
 export default function ImageUpload({
-                                        name,icon,defaultValue='',
-                                    }:{
+                                        name,icon,defaultValue='',}:{
     name:string;
     icon:IconDefinition;
     defaultValue:string;

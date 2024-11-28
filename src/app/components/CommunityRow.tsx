@@ -1,10 +1,14 @@
+'use client';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { Com } from "@/models/Com";
 import TimeAgo from "@/app/components/TimeAgo";
+import Link from "next/Link";
+import axios from "axios";
 
 
-export default async function CommunityRow ({comDoc}:{comDoc:Com}) {
+
+export default function CommunityRow ({comDoc}:{comDoc:Com}) {
 
     return (
         <>
@@ -20,16 +24,25 @@ export default async function CommunityRow ({comDoc}:{comDoc:Com}) {
                     </div>
                     <div className="grow md:flex">
                         <div className="grow">
-                            <div className="text-gray-500 text-sm">{comDoc.orgName}</div>
+                            <div>
+                                <Link href={`/coms/${comDoc.orgId}`} className="text-gray-500 text-sm">{comDoc.orgName|| '?'}</Link>
+                            </div>
                             <div className="font-bold mb-1 text-lg">{comDoc.title}</div>
                             <div className="text-gray-400 text-sm capitalize">
                                 {comDoc.initiatives}{' '}&middot;{' '}{comDoc.initiatives}{' '}&middot;{' '}{comDoc.initiatives}{' '}
                                 {comDoc.isAdmin && (
                                     <>
                                         {' '}&middot;{' '}
-                                        <button>Edit</button>
+                                        <Link href={'/coms/edit/'+comDoc._id}>Edit</Link>
                                         {' '}&middot;{' '}
-                                        <button>Delete</button>
+                                        <button
+                                            type="button"
+                                            onClick={async () => {
+                                                await axios.delete('/api/coms?id='+comDoc._id);
+                                                window.location.reload();
+                                        }}>
+                                            Delete
+                                        </button>
                                     </>
                                 )}
                             </div>

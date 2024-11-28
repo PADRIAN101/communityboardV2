@@ -5,12 +5,15 @@ import mongoose from "mongoose";
 import { revalidatePath } from "next/dist/server/web/spec-extension/revalidate";
 
 
-export async function saveComAction(data: FormData) {
+export async function saveComAction(formdata: FormData) {
     await mongoose.connect(process.env.MONGO_URI as string);
+    const{id, ...comData} = Object.fromEntries(formdata);
+    const comDoc = (id)
+        ? await ComModel.findByIdAndUpdate(id, comData)
+        : await ComModel.create(comData);
 
-    const comDoc = await ComModel.create (Object.fromEntries(data));
-    if ('orgId' in data){
-        revalidatePath('/coms/'+data?.orgId);
+    if ('orgId' in comData){
+        revalidatePath('/coms/'+comData?.orgId);
     }
 
 

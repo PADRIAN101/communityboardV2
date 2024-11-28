@@ -1,4 +1,5 @@
-import {model, models, Schema} from 'mongoose';
+import {AutoPaginatable, OrganizationMembership, User, WorkOS} from "@workos-inc/node";
+import mongoose, {model, models, Schema} from 'mongoose';
 
 export type Com = {
     _id: string;
@@ -32,7 +33,27 @@ const ComSchema = new Schema({
 
     },{
     timestamps:true,
-    }
+    });
 
-    );
+export async function addOrgAndUserData(comsDocs:Com[], user:User|null) {
+    comsDocs = JSON.parse(JSON.stringify(comsDocs));
+    await mongoose.connect(process.env.MONGO_URI as string);
+    const workos = new WorkOS(process.env.WORKOS_API_KEY);
+    let oms:AutoPaginatable<OrganizationMembership>|null = null;
+    if (user) {
+        oms = await workos.userManagement.listOrganizationMemberships({
+            userId: user?.id,
+        });
+    }
+    for (const com of comsDocs) {
+        const org = await workos.organizations.getOrganization(com.orgId);
+        com.orgName = org.name;
+        if (oms && oms.data.length > 0) {
+            com.isAdmin = !!oms.data.find(om => om.organizationId === com.orgId);
+        }
+    }
+    return comsDocs;
+}
+
+
 export const ComModel = models?.Com || model('Com', ComSchema);

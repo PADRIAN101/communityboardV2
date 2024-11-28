@@ -1,28 +1,21 @@
 import Hero from "@/app/components/Hero";
 import Jobscom from "@/app/components/Jobscom";
+import {addOrgAndUserData, ComModel} from "@/models/Com";
+import {withAuth} from "@workos-inc/authkit-nextjs";
 
-import {
-    getSignInUrl,
-    getSignUpUrl,
-    withAuth,
-} from '@workos-inc/authkit-nextjs';
 
 
 export default async function Home() {
+    const {user} = await withAuth()
+    const latestComs = await addOrgAndUserData(
+        await ComModel.find({},{},{Limit:5,sort:'-createdAt'}),
+        user,
 
-    // Retrieves the user from the session or returns `null` if no user is signed in
-    const { user } = await withAuth();
-
-    // Get the URL to redirect the user to AuthKit to sign in
-    const signInUrl = await getSignInUrl();
-
-    // Get the URL to redirect the user to AuthKit to sign up
-    const signUpUrl = await getSignUpUrl();
-
+    );
   return (
       <>
           <Hero />
-          <Jobscom />
+          <Jobscom header={''} coms={latestComs} />
       </>
 
 
