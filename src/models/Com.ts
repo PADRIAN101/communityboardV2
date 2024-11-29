@@ -1,5 +1,5 @@
-import {AutoPaginatable, OrganizationMembership, User, WorkOS} from "@workos-inc/node";
-import mongoose, {model, models, Schema} from 'mongoose';
+import { AutoPaginatable, OrganizationMembership, User, WorkOS } from "@workos-inc/node";
+import mongoose, { model, models, Schema } from 'mongoose';
 
 export type Com = {
     _id: string;
@@ -11,7 +11,7 @@ export type Com = {
     contactName: string;
     contactPhone: string;
     contactEmail: string;
-    initiatives: string;
+    initiatives: string[];
     comPhoto: string;
     orgId: string;
     createdAt: string;
@@ -20,26 +20,27 @@ export type Com = {
 };
 
 const ComSchema = new Schema({
-    title: {type: String, required: true},
-    description: {type: String, required: true},
-    orgIcon: {type: String},
-    orgId: {type: String},
-    contactPhoto: {type: String},
-    contactName: {type: String, required: true},
-    contactPhone: {type: String, required: true},
-    contactEmail: {type: String, required: true},
-    initiatives: {type: [String], required: true },
-    comPhoto: {type: String},
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    orgIcon: { type: String },
+    orgId: { type: String },
+    contactPhoto: { type: String },
+    contactName: { type: String, required: true },
+    contactPhone: { type: String, required: true },
+    contactEmail: { type: String, required: true },
+    initiatives: { type: [String], required: true },
+    comPhoto: { type: String },
+}, {
+    timestamps: true,
+});
 
-    },{
-    timestamps:true,
-    });
-
-export async function addOrgAndUserData(comsDocs:Com[], user:User|null) {
+export async function addOrgAndUserData(comsDocs: Com[], user: User | null) {
     comsDocs = JSON.parse(JSON.stringify(comsDocs));
+
     await mongoose.connect(process.env.MONGO_URI as string);
+
     const workos = new WorkOS(process.env.WORKOS_API_KEY);
-    let oms:AutoPaginatable<OrganizationMembership>|null = null;
+    let oms: AutoPaginatable<OrganizationMembership> | null = null;
     if (user) {
         oms = await workos.userManagement.listOrganizationMemberships({
             userId: user?.id,
@@ -54,6 +55,5 @@ export async function addOrgAndUserData(comsDocs:Com[], user:User|null) {
     }
     return comsDocs;
 }
-
 
 export const ComModel = models?.Com || model('Com', ComSchema);

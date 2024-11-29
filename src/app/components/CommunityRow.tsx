@@ -1,14 +1,23 @@
 'use client';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Com } from "@/models/Com";
 import TimeAgo from "@/app/components/TimeAgo";
 import Link from "next/Link";
 import axios from "axios";
 
-
-
-export default function CommunityRow ({comDoc}:{comDoc:Com}) {
+export default function CommunityRow({ comDoc }: { comDoc: Com }) {
+    // Helper function to format initiatives with " · " separator
+    const formatInitiatives = (initiatives: string[]) => {
+        return initiatives
+            .map(initiative => initiative
+                .replace(/[\[\]"]/g, '')  // Remove brackets and quotes
+                .replace(/\s+/g, ' ')     // Replace multiple spaces with one
+                .trim()                   // Remove leading/trailing spaces
+            )
+            .join(', ')                   // Join the initiatives with a comma (before replacing it)
+            .replace(/,/g, ' · ');        // Replace commas with middle dot (·)
+    };
 
     return (
         <>
@@ -20,29 +29,34 @@ export default function CommunityRow ({comDoc}:{comDoc:Com}) {
                     <div className="content-center">
                         <img
                             className="size-14"
-                            src="https://upload.wikimedia.org/wikipedia/commons/9/92/Angat_Buhay_logo.svg" alt=""/>
+                            src="https://static.thenounproject.com/png/627732-200.png"
+                            alt="Community Logo"
+                        />
                     </div>
                     <div className="grow md:flex">
                         <div className="grow">
                             <div>
-                                <Link href={`/coms/${comDoc.orgId}`} className="hover:underLine text-gray-500 text-sm">{comDoc.orgName|| '?'}</Link>
+                                <Link href={`/coms/${comDoc.orgId}`} className="hover:underline text-gray-500 text-sm">{comDoc.orgName || '?'}</Link>
                             </div>
                             <div className="font-bold mb-1 text-lg">
-                                <Link className="hover:underLine" href={'/show/'+comDoc._id}>{comDoc.title}</Link>
+                                <Link className="hover:underline" href={'/show/' + comDoc._id}>{comDoc.title}</Link>
                             </div>
                             <div className="text-gray-400 text-sm capitalize">
-                                {comDoc.initiatives}{' '}&middot;{' '}{comDoc.initiatives}{' '}&middot;{' '}{comDoc.initiatives}{' '}
+                                {/* Format initiatives and display */}
+                                {comDoc.initiatives?.length ? formatInitiatives(comDoc.initiatives) : 'No initiatives'}
+
+                                {/* Admin actions (Edit and Delete) */}
                                 {comDoc.isAdmin && (
                                     <>
-                                        {' '}&middot;{' '}
-                                        <Link href={'/coms/edit/'+comDoc._id}>Edit</Link>
-                                        {' '}&middot;{' '}
+                                        {' · '}
+                                        <Link href={'/coms/edit/' + comDoc._id}>Edit</Link>
+                                        {' · '}
                                         <button
                                             type="button"
                                             onClick={async () => {
-                                                await axios.delete('/api/coms?id='+comDoc._id);
+                                                await axios.delete('/api/coms?id=' + comDoc._id);
                                                 window.location.reload();
-                                        }}>
+                                            }}>
                                             Delete
                                         </button>
                                     </>
