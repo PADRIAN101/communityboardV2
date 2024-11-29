@@ -25,9 +25,11 @@ export default function CommunityRow ({comDoc}:{comDoc:Com}) {
                     <div className="grow md:flex">
                         <div className="grow">
                             <div>
-                                <Link href={`/coms/${comDoc.orgId}`} className="text-gray-500 text-sm">{comDoc.orgName|| '?'}</Link>
+                                <Link href={`/coms/${comDoc.orgId}`} className="hover:underLine text-gray-500 text-sm">{comDoc.orgName|| '?'}</Link>
                             </div>
-                            <div className="font-bold mb-1 text-lg">{comDoc.title}</div>
+                            <div className="font-bold mb-1 text-lg">
+                                <Link className="hover:underLine" href={'/show/'+comDoc._id}>{comDoc.title}</Link>
+                            </div>
                             <div className="text-gray-400 text-sm capitalize">
                                 {comDoc.initiatives}{' '}&middot;{' '}{comDoc.initiatives}{' '}&middot;{' '}{comDoc.initiatives}{' '}
                                 {comDoc.isAdmin && (
