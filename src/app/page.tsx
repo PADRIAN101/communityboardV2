@@ -6,6 +6,7 @@ import { withAuth } from "@workos-inc/authkit-nextjs";
 
 async function initializeDatabase() {
     if (mongoose.connection.readyState === 0) {
+        // @ts-ignore
         await mongoose.connect(process.env.MONGO_URI, {
             serverSelectionTimeoutMS: 30000,
             socketTimeoutMS: 45000,
