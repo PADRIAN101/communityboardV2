@@ -1,7 +1,9 @@
 import { AutoPaginatable, OrganizationMembership, User, WorkOS } from "@workos-inc/node";
 import mongoose, { model, models, Schema } from 'mongoose';
 
+
 export type Com = {
+    [x: string]: Key | null | undefined;
     _id: string;
     title: string;
     description: string;
