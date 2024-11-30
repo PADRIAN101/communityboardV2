@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
 
     // blob data of our file
     const chunks = [];
-    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     for await (const chunk of file.stream()) {
         chunks.push(chunk);
     }
