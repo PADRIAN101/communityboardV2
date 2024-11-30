@@ -12,7 +12,9 @@ export type Com = {
     contactPhone: string;
     contactEmail: string;
     initiatives: string[];
-    comPhoto: string;
+    comPhotoOne: string;
+    comPhotoTwo: string;
+    comPhotoThree: string;
     orgId: string;
     createdAt: string;
     updatedAt: string;
@@ -29,7 +31,9 @@ const ComSchema = new Schema({
     contactPhone: { type: String, required: true },
     contactEmail: { type: String, required: true },
     initiatives: { type: [String], required: true },
-    comPhoto: { type: String },
+    comPhotoOne: { type: String },
+    comPhotoTwo: { type: String },
+    comPhotoThree: { type: String },
 }, {
     timestamps: true,
 });

@@ -27,11 +27,10 @@ export default function CommunityRow({ comDoc }: { comDoc: Com }) {
                 </div>
                 <div className="flex grow gap-4">
                     <div className="content-center">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                            className="size-14"
-                            src="https://static.thenounproject.com/png/627732-200.png"
-                            alt="Community Logo"
-                        />
+                            className="size-12"
+                            src={comDoc?.orgIcon} alt=""/>
                     </div>
                     <div className="grow md:flex">
                         <div className="grow">
@@ -39,7 +38,7 @@ export default function CommunityRow({ comDoc }: { comDoc: Com }) {
                                 <Link href={`/coms/${comDoc.orgId}`} className="hover:underline text-gray-500 text-sm">{comDoc.orgName || '?'}</Link>
                             </div>
                             <div className="font-bold mb-1 text-lg">
-                                <Link className="hover:underline" href={'/show/' + comDoc._id}>{comDoc.title}</Link>
+                                <Link className="hover:underline" href={'/show/'+comDoc._id}>{comDoc.title}</Link>
                             </div>
                             <div className="text-gray-400 text-sm capitalize">
                                 {/* Format initiatives and display */}

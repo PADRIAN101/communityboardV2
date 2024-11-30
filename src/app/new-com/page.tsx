@@ -55,7 +55,7 @@ export default async function NewComPage(){
 
                 {organizationMemberships.data.length === 0 && (
                     <div className="border border-blue-200 bg-blue-50 p-4 rounded-md">
-                        No company found for this user
+                        No organization found for this user
                     </div>
                 )}
 

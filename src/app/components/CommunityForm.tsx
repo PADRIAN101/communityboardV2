@@ -10,8 +10,10 @@ import { saveComAction } from "@/app/actions/comActions";
 import type { Com } from "@/models/Com";
 
 export default function ComForm({ orgId, comDoc }: { orgId: string; comDoc?: Com }) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [checked, setChecked] = useState(false);
-    const [items, setItems] = useState<any[]>([]);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [items, setItems] = useState<unknown[]>([]);
 
     async function handleSaveCom(data: FormData) {
         // Convert initiatives into an array
@@ -125,41 +127,12 @@ export default function ComForm({ orgId, comDoc }: { orgId: string; comDoc?: Com
                                 </div>
                             </div>
                         </div>
-
-                        <div className="mt-3">
-                            <h1>Community images</h1>
-                            <div className="flex grow gap-3">
-                                <div>
-                                    <ImageUpload
-                                        name="ComPhoto"
-                                        icon={faImages}
-                                        defaultValue={comDoc?.comPhoto || ""}
-                                    />
-                                </div>
-                                <div>
-                                    <ImageUpload
-                                        name="ComPhoto"
-                                        icon={faImages}
-                                        defaultValue={comDoc?.comPhoto || ""}
-                                    />
-                                </div>
-                                <div>
-                                    <ImageUpload
-                                        name="ComPhoto"
-                                        icon={faImages}
-                                        defaultValue={comDoc?.comPhoto || ""}
-                                    />
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-                    <div className="text-gray-400 text-sm capitalize">
+                    <div className="text-white text-sm capitalize">
                         {/* Display the formatted initiatives without punctuation */}
                         {formatInitiatives(comDoc?.initiatives || []) || 'No initiatives'}
                     </div>
-
-                    <div className="flex justify-center mt-4">
+                    <div className="flex justify-center ">
                         <Button size="3" color="green">
                             <span className="px-8">Save</span>
                         </Button>

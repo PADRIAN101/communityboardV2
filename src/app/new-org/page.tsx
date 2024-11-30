@@ -16,6 +16,7 @@ export default async function NewOrganizationPage(){
 
 
     if(!user) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         'Login to use this page';
     }
 
