@@ -8,31 +8,32 @@ type PageProps = {
     };
 };
 
-// Function to format initiatives
-const formatInitiatives = (initiatives: string[]) => {
-    return initiatives
-        .map(initiative => initiative
-            .replace(/[\[\]"]/g, '')  // Remove brackets and quotes
-            .replace(/\s+/g, ' ')     // Replace multiple spaces with one
-        )
-        .join(' · ');                 // Join the initiatives with a middle dot (·)
+const connectToDB = async () => {
+    if (mongoose.connection.readyState === 0) {
+        await mongoose.connect(process.env.MONGO_URI as string);
+    }
 };
 
-export default async function SingleComPage(props: PageProps) {
-    const comId = props.params.comId;
+const formatInitiatives = (initiatives: string[] = []) =>
+    initiatives.map(initiative => initiative.trim().replace(/[\[\]"]/g, "")).join(" · ");
 
-    // Connect to MongoDB
-    await mongoose.connect(process.env.MONGO_URI as string);
+export default async function SingleComPage({ params }: PageProps) {
+    const { comId } = params;
 
-    // Fetch the community document
-    const comDoc = await ComModel.findById(comId);
+    let comDoc;
 
-    // Safely handle cases where comDoc is not found
+    try {
+        await connectToDB();
+        comDoc = await ComModel.findById(comId);
+    } catch (error) {
+        console.error("Error fetching community document:", error);
+        return <div>Failed to fetch community details. Please try again later.</div>;
+    }
+
     if (!comDoc) {
         return <div>Community not found.</div>;
     }
 
-    // Format initiatives
     const formattedInitiatives = comDoc.initiatives
         ? formatInitiatives(comDoc.initiatives)
         : "No initiatives available";
@@ -43,14 +44,15 @@ export default async function SingleComPage(props: PageProps) {
                 <div className="grow">
                     <h1 className="text-4xl mb-2">{comDoc.title}</h1>
                     <div className="capitalize text-sm text-emerald-800 mb-4">
-                        {formattedInitiatives} {/* Display the formatted initiatives */}
+                        {formattedInitiatives}
                     </div>
                 </div>
                 <div>
                     <Image
-                        src={comDoc?.orgIcon}
-                        alt={'org icon'}
-                        width={500} height={500}
+                        src={comDoc?.orgIcon || "/default-icon.png"}
+                        alt="org icon"
+                        width={500}
+                        height={500}
                         className="w-auto h-auto max-w-16 max-h-16"
                     />
                 </div>
@@ -58,20 +60,22 @@ export default async function SingleComPage(props: PageProps) {
             <div className="whitespace-pre-line text-sm text-gray-600">
                 {comDoc.description}
             </div>
-            <div className="flex gap-4">
-            </div>
+            <div className="flex gap-4"></div>
             <div className="mt-4 bg-gray-200 p-8 rounded-lg">
                 <h3 className="font-bold mb-2">To support the community contact us:</h3>
                 <div className="flex gap-4">
                     <Image
-                        src={comDoc.contactPhoto}
-                        alt={'contact person'}
-                        width={500} height={500}
+                        src={comDoc.contactPhoto || "/default-contact.png"}
+                        alt="contact person"
+                        width={500}
+                        height={500}
                         className="w-auto h-auto max-w-24 max-h-24"
                     />
                     <div className="flex content-center items-center">
-                        {comDoc.contactName}<br/>
-                        Email: {comDoc.contactEmail}<br/>
+                        {comDoc.contactName}
+                        <br />
+                        Email: {comDoc.contactEmail}
+                        <br />
                         Phone: {comDoc.contactPhone}
                     </div>
                 </div>
