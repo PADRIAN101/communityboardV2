@@ -23,7 +23,7 @@ export default async function NewOrganizationPage(){
     return (
         <div className="container">
             <h2 className="text-lg mt-6">Create a new organization</h2>
-            <p className="text-sm">To create community, you need a profile</p>
+            <p className="text-sm">To create community, you need an account</p>
             <form
                 action={handleNewOrgFormSubmit}
                 className="flex gap-2">
