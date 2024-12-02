@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Com } from "@/models/Com";
 import TimeAgo from "@/app/components/TimeAgo";
-import Link from "next/Link";
+import Link from "next/link";
 import axios from "axios";
 
 export default function CommunityRow({ comDoc }: { comDoc: Com }) {
